@@ -120,7 +120,7 @@
   <div id="modalError" class="modal">
     <div class="modal-content">
       <span class="modal-close" onclick="cerrarModal()">&times;</span>
-      <img src="archivos/hold.jpg" alt="Error">
+      <img src="hold.png" alt="Error">
       <button onclick="cerrarModal()">Aceptar</button>
     </div>
   </div>
